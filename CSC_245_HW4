@@ -1,0 +1,138 @@
+# Part 1: Functions
+
+# Basic Function
+def add_numbers(a, b):
+    return a + b
+
+add_lambda = lambda a, b: a + b
+
+def join_words(*words):
+    return ' '.join(words)
+
+join_lambda = lambda *words: ' '.join(words)
+
+def countdown(n):
+    if n < 0:
+        return
+    print(n)
+    countdown(n - 1)
+
+def greet(name):
+    return f"Hello, {name}!"
+
+def repeat_phrase(phrase, times=2):
+    return phrase * times
+
+def apply_function(func, value):
+    return func(value)
+
+print("Part 1:")
+
+print("\n*Basic Function*")
+print(add_numbers(3, 5))  # Output: 8
+print(add_lambda(3, 5))   # Output: 8
+
+print("\n*Flexible Function*")
+print(join_words("Hello", "world", "!"))  # Output: "Hello world !"
+print(join_lambda("Hello", "world", "!")) # Output: "Hello world !"
+
+print("\n*Recursive Function*")
+countdown(5)  # Output: 5 4 3 2 1 0
+
+print("\n*Normal Function Usage*")
+print(greet("Alice"))  # Output: "Hello, Alice!"
+
+print("\n*Function with Default Arguments*")
+print(repeat_phrase("Hi! "))    # Output: "Hi! Hi! "
+print(repeat_phrase("Hi! ", 3)) # Output: "Hi! Hi! Hi! "
+
+print("\n*Higher-Order Function*")
+print(apply_function(lambda x: x.upper(), "hello"))  # Output: "HELLO"
+
+
+# Part 2: Errors and Exceptions
+
+def safe_divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return "Error: Cannot divide by zero"
+    finally:
+        print("Division attempted")
+
+def check_age(age):
+    if not isinstance(age, int) or age < 0:
+        raise ValueError("Age must be a positive integer")
+
+def parse_int(value):
+    try:
+        return int(value)
+    except ValueError:
+        return "Error: Invalid integer"
+
+print("\nPart 2:")
+
+print("\n*Handling Errors*")
+print(safe_divide(10, 2))  # Output: 5.0
+print(safe_divide(10, 0))  # Output: "Error: Cannot divide by zero"
+
+print("\n*Custom Exceptions*")
+try:
+    check_age(-5)
+except ValueError as e:
+    print(e)  # Output: "Age must be a positive integer"
+
+print("\n*Handling Multiple Exceptions*")
+print(parse_int("10"))   # Output: 10
+print(parse_int("abc"))  # Output: "Error: Invalid integer"
+
+
+# Part 3: Iterators
+
+print("\nPart 3: Iterators")
+
+print("\n*Using Built-in Iterators*")
+numbers = [5, 4, 3, 2, 1]
+iterator = iter(numbers)
+
+try:
+    while True:
+        print(next(iterator))
+except StopIteration:
+    pass
+
+print("\n*Using Generator Expressions*")
+words = ["hello", "world", "python"]
+uppercase_words = (word.upper() for word in words)
+
+for word in uppercase_words:
+    print(word)
+
+print("\n*Custom Iterator Class*")
+class Countdown:
+    def __init__(self, start):
+        self.current = start
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current < 0:
+            raise StopIteration
+        else:
+            current = self.current
+            self.current -= 1
+            return current
+
+countdown = Countdown(5)
+for number in countdown:
+    print(number)
+
+print("\n*Using itertools*")
+import itertools
+
+colors = ["red", "blue", "green"]
+cycled_colors = itertools.cycle(colors)
+
+for _ in range(6):
+    print(next(cycled_colors))
